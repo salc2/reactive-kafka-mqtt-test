@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MQTT - Kafka - Akka Stream</title>
+    <style type="text/css">
+        #main{
+            width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <h2 id="device-name"></h2>
+    <p id="body-msg"></p>
+    <div id="command-section">
+        <input type="text" name="command" id="command">
+        <button id="send-command">Enviar</button>
+    </div>
+</div>
+<script type="text/javascript">
+    (function(){
+        var deviceName = location.pathname.replace("/app/","");
+        var pathname = location.pathname.replace("app","ws");
+        var ws = new WebSocket("ws://localhost:8080"+pathname);
+
+        document.querySelector("#device-name").innerHTML = deviceName;
+        ws.onopen = function (event) {
+            console.log("starting...")
+        }
+        ws.onmessage = function(event){
+            document.querySelector("#body-msg").innerHTML = event.data;
+        };
+        document.querySelector("#send-command").onclick = function () {
+            var command = document.querySelector("#command").value;
+            ws.send(command);
+        };
+
+    })();
+</script>
+</body>
+</html>
