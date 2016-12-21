@@ -41,6 +41,7 @@
         document.querySelector("#send-command").onclick = function () {
             var command = document.querySelector("#command").value;
             ws.send(command);
+            command.value = "";
         };
 
     })();

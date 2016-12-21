@@ -44,7 +44,6 @@ object WebServer extends JsonSupport{
         }
       } ~
       path("ws" / Segment){ rest =>
-        println(rest)
         extractUpgradeToWebSocket { upgrade =>
           val sink = createSinkWS(rest)
           val source = createSourceWS(rest)
@@ -75,7 +74,6 @@ object WebServer extends JsonSupport{
     Sink.foreach[Message]( m =>
       m.asInstanceOf[TextMessage].textStream
           .map{ msg =>
-            println(msg)
             new ProducerRecord[Array[Byte], String]("devices.commands",
               KafkaMessage(s"/devices/$device",msg).toJson.toString )
           }

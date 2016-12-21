@@ -14,7 +14,7 @@ object DeviceEmulatorMain {
     var delta = System.currentTimeMillis
 
     device.subscribe(s"/devices/${args(0)}/command", (_: String, message: MqttMessage) => {
-      println(s"RECEIVED: ${message.getPayload}")
+      println(s"RECEIVED: ${new String(message.getPayload)}")
     })
 
     while(true){

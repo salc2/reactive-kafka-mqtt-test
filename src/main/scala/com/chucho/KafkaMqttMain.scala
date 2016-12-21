@@ -35,11 +35,7 @@ object KafkaMqttMain extends JsonSupport{
     Consumer.plainSource(consumerSettings,
       Subscriptions.topics("devices.commands"))
       .map(_.value)
-        .map( re =>{
-          println("aqui en el consumer "+re)
-          re
-        })
-      .map(_.toJson)
+      .map(_.parseJson)
       .map(_.convertTo[KafkaMessage])
       .runWith(Sink.foreach( kfMsg => {
         pubMqttClient.publish(s"${kfMsg.device}/command",kfMsg.body.getBytes)
