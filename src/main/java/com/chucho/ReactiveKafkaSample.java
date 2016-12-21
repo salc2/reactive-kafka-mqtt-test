@@ -34,13 +34,13 @@ public class ReactiveKafkaSample {
 
         final ConsumerSettings<byte[], String> consumerSettings =
                 ConsumerSettings.create(system, new ByteArrayDeserializer(), new StringDeserializer())
-                        .withBootstrapServers("192.168.1.43:9092")
+                        .withBootstrapServers("192.168.104.14")
                         .withGroupId("group1")
                         .withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         final ProducerSettings<byte[], String> producerSettings = ProducerSettings
                 .create(system, new ByteArraySerializer(), new StringSerializer())
-                .withBootstrapServers("192.168.1.43:9092");
+                .withBootstrapServers("192.168.104.14:9092");
 
         Consumer.plainSource(
                 consumerSettings,

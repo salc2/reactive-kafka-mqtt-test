@@ -17,7 +17,7 @@ import spray.json._
 
 object KafkaMqttMain extends JsonSupport{
 
-  val kafkaHost = "192.168.1.43:9092"
+  val kafkaHost = "192.168.104.14:9092"
   val mqttHost = "tcp://172.17.0.2:1883"
 
   def main(arg: Array[String]): Unit = {
@@ -30,16 +30,16 @@ object KafkaMqttMain extends JsonSupport{
    val consumerSettings = ConsumerSettings(system, new ByteArrayDeserializer, new StringDeserializer)
       .withBootstrapServers(kafkaHost)
       .withGroupId("group1")
-      .withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
+      //.withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
 
-    Consumer.committableSource(consumerSettings,
+    Consumer.plainSource(consumerSettings,
       Subscriptions.topics("devices.commands"))
-      .map(_.record)
+      .map(_.value)
         .map( re =>{
           println("aqui en el consumer "+re)
           re
         })
-      .map(_.value.toJson)
+      .map(_.toJson)
       .map(_.convertTo[KafkaMessage])
       .runWith(Sink.foreach( kfMsg => {
         pubMqttClient.publish(s"${kfMsg.device}/command",kfMsg.body.getBytes)

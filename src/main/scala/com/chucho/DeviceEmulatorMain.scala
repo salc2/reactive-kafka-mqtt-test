@@ -19,7 +19,7 @@ object DeviceEmulatorMain {
 
     while(true){
       if(System.currentTimeMillis - delta > 500){
-        val msg =  Process("free").lineStream.toList.mkString
+        val msg =  Process("free").lineStream.toList.mkString(""";""")
         device.publish(s"/devices/${args(0)}/stream",msg.getBytes)
         delta = System.currentTimeMillis
       }

@@ -24,13 +24,19 @@
         var deviceName = location.pathname.replace("/app/","");
         var pathname = location.pathname.replace("app","ws");
         var ws = new WebSocket("ws://localhost:8080"+pathname);
+        var bodyMsg = document.querySelector("#body-msg")
 
         document.querySelector("#device-name").innerHTML = deviceName;
         ws.onopen = function (event) {
             console.log("starting...")
         }
         ws.onmessage = function(event){
-            document.querySelector("#body-msg").innerHTML = event.data;
+            bodyMsg.innerHTML = "";
+            var acc ="";
+            event.data.split(";").forEach(function(line){
+               acc = acc+"<p>"+line+"</p>"
+            })
+            bodyMsg.innerHTML = acc;
         };
         document.querySelector("#send-command").onclick = function () {
             var command = document.querySelector("#command").value;
