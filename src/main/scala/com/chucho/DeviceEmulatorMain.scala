@@ -10,7 +10,7 @@ object DeviceEmulatorMain {
 
   def main(args:Array[String]):Unit = {
 
-    val device = MyMqttClient("tcp://172.17.0.2:1883",args(0))
+    val device = MyMqttClient("tcp://localhost:1883",args(0))
     var delta = System.currentTimeMillis
 
     device.subscribe(s"/devices/${args(0)}/command", (_: String, message: MqttMessage) => {
@@ -31,6 +31,7 @@ object DeviceEmulatorMain {
 case class MyMqttClient(brokerHost:String, clientId:String) {
   private val persistence = new MemoryPersistence
   private val sampleClient = new MqttClient(brokerHost, clientId, persistence)
+
   private val optCon = new MqttConnectOptions {
     setCleanSession(true)
   }

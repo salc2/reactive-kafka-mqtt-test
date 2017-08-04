@@ -1,5 +1,7 @@
 package com.chucho
 
+import java.util.Random
+
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.ws.{Message, TextMessage}
@@ -23,11 +25,11 @@ object WebServer extends JsonSupport{
   implicit val materializer = ActorMaterializer()
   private implicit val executionContext = system.dispatcher
 
-  private val consumerSettings = ConsumerSettings(system, new ByteArrayDeserializer,
+  private def consumerSettings = ConsumerSettings(system, new ByteArrayDeserializer,
     new StringDeserializer)
     .withBootstrapServers(KafkaMqttMain.kafkaHost)
-    .withGroupId("group1")
-    .withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
+    .withGroupId("group"+ new Random().nextInt(50))
+    //.withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "smallest")
 
   private val producerSettings = ProducerSettings(system, new ByteArraySerializer,
     new StringSerializer)

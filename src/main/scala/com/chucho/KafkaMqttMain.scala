@@ -1,11 +1,15 @@
 package com.chucho
 
+import java.util.Properties
+
 import akka.actor.ActorSystem
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.kafka.scaladsl.{Consumer, Producer}
 import akka.kafka.{ConsumerSettings, ProducerSettings, Subscriptions}
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Sink
+import kafka.admin.AdminUtils
+import org.I0Itec.zkclient.ZkClient
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.{ByteArrayDeserializer, ByteArraySerializer, StringDeserializer, StringSerializer}
@@ -17,15 +21,14 @@ import spray.json._
 
 object KafkaMqttMain extends JsonSupport{
 
-  val kafkaHost = "192.168.104.14:9092"
-  val mqttHost = "tcp://172.17.0.2:1883"
+  val kafkaHost = "localhost:9092"
+  val mqttHost = "tcp://localhost:1883"
 
   def main(arg: Array[String]): Unit = {
 
     lazy implicit val system = ActorSystem("reactive-kafka")
     lazy implicit val materializer = ActorMaterializer()
     val pubMqttClient = MyMqttClient(mqttHost,"pub_n1")
-
 
    val consumerSettings = ConsumerSettings(system, new ByteArrayDeserializer, new StringDeserializer)
       .withBootstrapServers(kafkaHost)
@@ -50,7 +53,7 @@ object KafkaMqttMain extends JsonSupport{
           val topic = mqttMsg.topic.replace("/stream","")
           KafkaMessage(topic, mqttMsg.payload.decodeString("UTF-8"))
         }.map{ msgKafka =>
-          new ProducerRecord[Array[Byte], String]("devices.stream", msgKafka.toJson.toString )
+          new ProducerRecord[Array[Byte], String]("devices.stream",msgKafka.toJson.toString )
         }.runWith( Producer.plainSink(producerSettings) )
   }
 }
