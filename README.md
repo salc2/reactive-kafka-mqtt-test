@@ -3,7 +3,7 @@
 ## Context ##
 Playing with Kafka, Akka and MQTT to emulate ioT devices
 
-This was just a proof of concept bulding "from scratch" a iot communication. 
+This was just a proof of concept bulding "from scratch" an iot communication architecture. 
 Using Akka Stream/Http, kafka, Alpakka, Mqtt, eclipse paho and ofcourse Scala.
 
 ```$xslt
