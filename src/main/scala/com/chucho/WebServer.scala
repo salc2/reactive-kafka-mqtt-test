@@ -10,7 +10,6 @@ import akka.kafka.scaladsl.{Consumer, Producer}
 import akka.kafka.{ConsumerSettings, ProducerSettings, Subscriptions}
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Sink, Source}
-import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.{ByteArrayDeserializer, ByteArraySerializer, StringDeserializer, StringSerializer}
 import spray.json._
@@ -29,7 +28,6 @@ object WebServer extends JsonSupport{
     new StringDeserializer)
     .withBootstrapServers(KafkaMqttMain.kafkaHost)
     .withGroupId("group"+ new Random().nextInt(50))
-    //.withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "smallest")
 
   private val producerSettings = ProducerSettings(system, new ByteArraySerializer,
     new StringSerializer)

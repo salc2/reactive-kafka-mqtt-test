@@ -1,16 +1,11 @@
 package com.chucho
 
-import java.util.Properties
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.kafka.scaladsl.{Consumer, Producer}
 import akka.kafka.{ConsumerSettings, ProducerSettings, Subscriptions}
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Sink
-import kafka.admin.AdminUtils
-import org.I0Itec.zkclient.ZkClient
-import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.{ByteArrayDeserializer, ByteArraySerializer, StringDeserializer, StringSerializer}
 import spray.json._
@@ -33,7 +28,6 @@ object KafkaMqttMain extends JsonSupport{
    val consumerSettings = ConsumerSettings(system, new ByteArrayDeserializer, new StringDeserializer)
       .withBootstrapServers(kafkaHost)
       .withGroupId("group1")
-      //.withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
 
     Consumer.plainSource(consumerSettings,
       Subscriptions.topics("devices.commands"))
