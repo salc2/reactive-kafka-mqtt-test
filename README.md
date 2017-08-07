@@ -3,7 +3,7 @@
 ## Context ##
 Playing with Kafka, Akka and MQTT to emulate ioT devices
 
-This was just a proof of concept bulding "from scratch" an iot communication architecture. 
+This was just a proof of concept bulding "from scratch" an iot communication "architecture" =S. 
 Using Akka Stream/Http, kafka, Alpakka, Mqtt, eclipse paho and ofcourse Scala.
 
 ```$xslt
@@ -52,7 +52,7 @@ Open a third more terminal a run:
 $ sbt "runMain com.chucho.DeviceEmulatorMain device01"
 ```
 
-Go to the browser to `localhost:8080/app/device01` and you can watch data collected by that device (just the `free` unix command each 500ms). 
+Go to the browser to `localhost:8080/app/device01` and you can watch data collected by that device (it is just a `free` unix command call each 500ms). 
 You could also send it messages, it will print messages out in the terminal where it runs.
  
 You can run as many device emulator as you want. For any N number of devices
