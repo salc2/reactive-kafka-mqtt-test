@@ -20,7 +20,7 @@ Using Akka Stream/Http, kafka, Alpakka, Mqtt, eclipse paho and ofcourse Scala.
 |               +----->                                              |
 |               |     |              Kafka                           |
 | web server    <------+                                             |
-|               |     +----------------------------------------------+
+| Akka-http     |     +----------------------------------------------+
 +---------------+
 ```
 
@@ -52,7 +52,7 @@ Open a third more terminal a run:
 $ sbt "runMain com.chucho.DeviceEmulatorMain device01"
 ```
 
-Go to the browser to `localhost:8080/app/device01` and you can watch data collected by that device. 
+Go to the browser to `localhost:8080/app/device01` and you can watch data collected by that device (just the `free` unix command each 500ms). 
 You could also send it messages, it will print messages out in the terminal where it runs.
  
 You can run as many device emulator as you want. For any N number of devices
