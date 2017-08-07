@@ -1,6 +1,6 @@
 # reactive-kafka-mqtt-test #
 
-##Context##
+## Context ##
 Playing with Kafka, Akka and MQTT to emulate ioT devices
 
 This was just a proof of concept bulding "from scratch" a iot communication. 
@@ -24,11 +24,11 @@ Using Akka Stream/Http, kafka, Alpakka, Mqtt, eclipse paho and ofcourse Scala.
 +---------------+
 ```
 
-##What do you need to run it##
+## What do you need to run it ##
    - sbt
    - docker
    
-##How to prepare the environment##
+## How to prepare the environment ##
 ```shell
 $ docker pull spotify/kafka
 $ docker pull emqttd/emqttd
@@ -37,7 +37,7 @@ $ docker run -d --name emq -p 18083:18083 -p 1883:1883 emqttd/emqttd:latest /opt
 ```
 > NOTE: Here _ADVERTISED_HOST=172.17.0.1_ you would need to replace it with your docker ip host usually it is 172.17.0.1
 
-##Run the application and play with it##
+## Run the application and play with it ##
 
 Open a terminal a run:
 ```shell
